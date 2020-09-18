@@ -1,6 +1,4 @@
 #pragma once
-#include <sstream>
-using std::string;
 template <class T>
 class Nodo {
 private:
@@ -88,9 +86,6 @@ public:
 template <class T>
 Heap<T>::Heap() {
 	primero = NULL;
-	actual = NULL;
-	ultimo = NULL;
-	n = 0;
 }
 
 template <class T>
