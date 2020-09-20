@@ -2,6 +2,10 @@
 using std::cout;
 using std::endl;
 int main() {
-	return 0;
+
+
+	//hola
 	system("pause");
+	return 0;
+	
 }
