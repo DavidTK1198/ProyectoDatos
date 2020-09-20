@@ -2,6 +2,7 @@
 using std::cout;
 using std::endl;
 int main() {
-	return 0;
+	cout << "Hola mundo" << endl;
 	system("pause");
+	return 0;
 }
