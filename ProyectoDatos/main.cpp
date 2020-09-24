@@ -1,10 +1,10 @@
 #include <iostream>
-#include "Heap.h"
+#include "Lista.h"
 using std::cout;
 using std::endl;
 int main() {
 	cout << "Hola mundo" << endl;
-	Heap<int>* heap = new Heap<int>();
+	Lista<int>* heap = new Lista<int>();
 	heap->insertar(new int(8));
 	heap->insertar(new int(5));
 	heap->insertar(new int(12));
@@ -13,7 +13,8 @@ int main() {
 	heap->insertar(new int(18));
 	heap->mostrar();
 
-	//heap->CrearHeap();
+	heap->CrearHeap();
+	heap->mostrar();
 
 	system("pause");
 	return 0;

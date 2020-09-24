@@ -143,7 +143,9 @@
     <ClCompile Include="Persona.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ColaPrioridad.h" />
     <ClInclude Include="Heap.h" />
+    <ClInclude Include="Lista.h" />
     <ClInclude Include="Persona.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
