@@ -10,8 +10,6 @@ public:
 private:
 	bool compara(T& obj_a, T& obj_b);
 	bool tipo;
-	private Lista<T> lista
-		;
 	
 
 };
