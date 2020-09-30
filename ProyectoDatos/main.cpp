@@ -13,8 +13,8 @@ int main() {
 	heap->insertar(new int(18));
 	heap->mostrar();
 
-	heap->CrearHeap();
-	heap->mostrar();
+	/*heap->CrearHeap();*/
+	/*heap->mostrar();*/
 
 	system("pause");
 	return 0;
