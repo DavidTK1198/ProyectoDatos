@@ -144,7 +144,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ColaPrioridad.h" />
-    <ClInclude Include="Heap.h" />
     <ClInclude Include="Lista.h" />
     <ClInclude Include="Persona.h" />
   </ItemGroup>

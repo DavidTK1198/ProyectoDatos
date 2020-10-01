@@ -71,19 +71,23 @@ private:
 
 	Nodo<T>* primero;
 	Nodo<T>* actual;
+	Nodo<T>* ultimo;
 	int cantidad;
 	
 
 public:
 	Lista();
+	Lista(const Lista<T>& ls);
 	virtual ~Lista();
 	int getCantidad();
 	void limpiaHeap();
 	Nodo<T>* getFront();
+	Nodo<T> getBack();
 	bool empty();
 	bool insertar(T*);
-	//bool eliminar();
+	bool eliminar();
 	void mostrar();
+	T elemento();
 
 };
 
@@ -91,8 +95,28 @@ template <class T>
 Lista<T>::Lista() {
 	primero = nullptr;
 	actual = nullptr;
+	ultimo = nullptr;
 	cantidad = 0;
 }
+
+
+template<class T>
+Lista<T>::Lista(const Lista<T>& ls)
+{
+	int contador = 0;
+	T* dato = NULL;
+	actual= ls.primero;
+	while (ls.cantidad>contador)
+	{
+		dato = new T(*actual->getObjetoPtr());
+		actual = actual->getSiguiente();
+		this->insertar(dato);
+		contador++;
+	}
+	
+}
+
+
 
 template <class T>
 Lista<T>::~Lista() {
@@ -122,6 +146,11 @@ Nodo<T>* Lista<T>::getFront()
 	return primero;
 }
 template<class T>
+ Nodo<T> Lista<T>::getBack()
+{
+	return ultimo;
+}
+template<class T>
 bool Lista<T>::empty()
 {
 	return primero == NULL;
@@ -144,8 +173,26 @@ bool Lista<T>::insertar(T* p)
 	aux = new Nodo<T>(p, nullptr, actual);
 	this->cantidad++;
 	actual->setSiguiente(aux);
+	ultimo = aux;
 	return true;
 	
+}
+
+template<class T>
+ bool Lista<T>::eliminar()
+ {
+	 Nodo<T>* aux = nullptr;
+	 actual = primero;
+	 aux = ultimo->getAnterior();
+	 aux->setSiguiente(nullptr);
+	 ultimo->setSiguiente(primero->getSiguiente());
+	 primero = ultimo;
+	 ultimo = aux;
+	 aux = actual->getSiguiente();
+	 aux->setAnterior(primero);
+	 primero->setAnterior(nullptr);
+	 delete actual;
+	return  true;
 }
 
 
@@ -157,6 +204,12 @@ void Lista<T>::mostrar()
 		std::cout << *actual->getObjetoPtr() << std::endl;
 		actual = actual->getSiguiente();
 	}
+}
+
+template<class T>
+ T Lista<T>::elemento()
+{
+	return *primero->getObjetoPtr();
 }
 
 
