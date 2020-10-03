@@ -38,6 +38,11 @@ Persona::Persona(string ced, string nom, int eda)
     this->edad = eda;
 }
 
+Persona::operator int const()
+{
+    return edad;
+}
+
 ostream& operator<<(ostream& os, Persona&)
 {
     return os;

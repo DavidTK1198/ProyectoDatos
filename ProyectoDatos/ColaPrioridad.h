@@ -21,7 +21,7 @@ private:
 	void CrearHeap(Lista<T>*);
 	int getPadre(int);
 	int getHijoDer(int);
-	void SiftUp(int);
+	void SiftUp();
 };
 
 template<class T>
@@ -196,10 +196,11 @@ int ColaPrioridad<T>::getHijoDer(int i)
 }
 
 template<class T>
-inline void ColaPrioridad<T>::SiftUp(int i)
+inline void ColaPrioridad<T>::SiftUp()
 {
-	int tmp = getPadre(i);
-
+	Nodo<T>* aux = contenedor->getBack();
+	while (aux)
+		aux = aux->getAnterior();
 }
 
 template<class T>

@@ -16,10 +16,7 @@ public:
 
 	Persona(string = "", string = "", int = 0);
 	friend ostream& operator <<(ostream&, Persona&);
-	//bool operator == (Persona&);
-	//bool operator > (Persona&);
-	//bool operator < (Persona&);
-	//bool operator >= (Persona&);
+	operator int  const ();
 private:
 	string nombre;
 	string ced;
