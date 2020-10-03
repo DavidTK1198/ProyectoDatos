@@ -10,6 +10,7 @@ public:
 	bool insertar(T*&);
 	bool eliminar();
 	T peek();
+	void mostrar();
 private:
 	bool compara(T& obj_a, T& obj_b);
 	bool tipo;
@@ -22,12 +23,13 @@ private:
 	int getPadre(int);
 	int getHijoDer(int);
 	void SiftUp();
+	void SiftUpMenor();
 };
 
 template<class T>
 ColaPrioridad<T>::ColaPrioridad(bool m)
 {
-	this->heap = new Lista<T>();
+	this->contenedor = new Lista<T>();
 	this->tipo = m;
 }
 
@@ -39,6 +41,9 @@ ColaPrioridad<T>::ColaPrioridad( const ColaPrioridad<T> &cl) {
 template<class T>
  ColaPrioridad<T>::ColaPrioridad(const Lista<T>& ls)
 {
+	 this->contenedor = new Lista<T>(&ls);
+	 this->CrearHeap(contenedor);
+	 this->tipo = true;
 }
 
 
@@ -52,14 +57,35 @@ template<class T>
 bool ColaPrioridad<T>::insertar(T*& obj)
 {
 	this->contenedor->insertar(obj);
-	this->SiftUp(contenedor->getCantidad());
+	if (contenedor->getCantidad() > 0) {
+		if (tipo == true) {
+			this->SiftUp();
+		}
+		else {
+			this->SiftUpMenor();
+		}
+	}
 	return true;
 }
 
 template<class T>
 bool ColaPrioridad<T>::eliminar()
 {
-	return this->contenedor->eliminar();
+	bool m = this->contenedor->eliminar();
+	if (m == true) {
+		int n = ((contenedor->getCantidad() - 1) / 2); //Revisar minuciosamente  1
+		for (int i = n; i >= 0; i--) {
+			if (this->tipo == true) {
+				this->MaxHeapify(i);
+			}
+			else {
+				this->MinHeapify(i);
+			}
+		}
+		return true;
+	}
+	return false;
+
 }
 
 template<class T>
@@ -80,7 +106,7 @@ void ColaPrioridad<T>::MaxHeapify(int i)
 	int izq = this->getHijoIz(i);//index vectores...
 	int der = this->getHijoDer(i);//nodo 3 
 	int mayor = 0;
-	if (izq == -1 || der == -1) {
+	if (izq == -1 && der == -1) {
 		return;
 	}
 
@@ -96,7 +122,7 @@ void ColaPrioridad<T>::MaxHeapify(int i)
 
 	if (mayor != i) {
 		this->Intercambio(mayor, i);
-		this->Heapify(mayor);
+		this->MaxHeapify(mayor);
 	}
 
 }
@@ -106,24 +132,24 @@ template<class T>
 {
 	 int izq = this->getHijoIz(i);//index vectores...
 	 int der = this->getHijoDer(i);//nodo 3 
-	 int mayor = 0;
-	 if (izq == -1 || der == -1) {
+	 int menor = 0;
+	 if (izq == -1 && der == -1) {
 		 return;
 	 }
 
-	 if (izq > i) {
-		 mayor = izq;
+	 if (izq < i && izq != -1) {
+		 menor = izq;
 	 }
 	 else {
-		 mayor = i;
+		 menor = izq;
 	 }
-	 if (der > mayor) {
-		 mayor = der;
+	 if (der < menor && der != -1) {
+		 menor  = der;
 	 }
 
-	 if (mayor != i) {
-		 this->Intercambio(mayor, i);
-		 this->Heapify(mayor);
+	 if (menor != i) {
+		 this->Intercambio(menor, i);
+		 this->MinHeapify(menor);
 	 }
 
 }
@@ -150,9 +176,14 @@ int ColaPrioridad<T>::getHijoIz(int i)
 template<class T>
 void ColaPrioridad<T>::CrearHeap(Lista<T>* ls)
 {
-	int n = (contenedor->getCantidad() / 2 - 1); //Revisar minuciosamente
+	int n = ((contenedor->getCantidad()-1)/2); //Revisar minuciosamente
 	for (int i = n; i >= 0; i--) {
-		this->Heapify(i);
+		if (this->tipo == true) {
+			this->MaxHeapify(i);
+		}
+		else {
+			this->MinHeapify(i);
+		}
 	}
 }
 
@@ -196,13 +227,43 @@ int ColaPrioridad<T>::getHijoDer(int i)
 }
 
 template<class T>
-inline void ColaPrioridad<T>::SiftUp()
+void ColaPrioridad<T>::SiftUp()
 {
 	Nodo<T>* aux = contenedor->getBack();
-	while (aux)
+	int contador = contenedor->getCantidad();
+	int contador2 = contador - 1;
+	while (aux && contador2>=0) {
+		if (!compara(*aux->getObjetoPtr(),*aux->getAnterior()->getObjetoPtr())) {
+			return;
+		}
+		else {
+			this->Intercambio(contador, contador2);
+		}
 		aux = aux->getAnterior();
-}
+		contador--;
+		contador2--;
+	}
 
+}
+template<class T>
+void ColaPrioridad<T>::SiftUpMenor()
+{
+	Nodo<T>* aux = contenedor->getBack();
+	int contador = contenedor->getCantidad();
+	int contador2 = contador - 1;
+	while (aux && contador2 >= 0) {
+		if (!compara(*aux->getObjetoPtr(), *aux->getAnterior()->getObjetoPtr())) {
+			this->Intercambio(contador, contador2);
+		}
+		else{
+			return;
+		}
+		aux = aux->getAnterior();
+		contador--;
+		contador2--;
+	}
+
+}
 template<class T>
 void ColaPrioridad<T>::Intercambio(int mayor, int i)
 {
@@ -242,6 +303,10 @@ void ColaPrioridad<T>::Intercambio(int mayor, int i)
 		contador++;
 	}
 
+}
+template<class T>
+void ColaPrioridad<T>::mostrar() {
+	this->contenedor->mostrar();
 }
 
 

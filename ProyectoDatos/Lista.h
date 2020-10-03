@@ -82,7 +82,7 @@ public:
 	int getCantidad();
 	void limpiaHeap();
 	Nodo<T>* getFront();
-	Nodo<T> getBack();
+	Nodo<T>* getBack();
 	bool empty();
 	bool insertar(T*);
 	bool eliminar();
@@ -146,7 +146,7 @@ Nodo<T>* Lista<T>::getFront()
 	return primero;
 }
 template<class T>
- Nodo<T> Lista<T>::getBack()
+ Nodo<T>* Lista<T>::getBack()
 {
 	return ultimo;
 }
@@ -181,18 +181,22 @@ bool Lista<T>::insertar(T* p)
 template<class T>
  bool Lista<T>::eliminar()
  {
-	 Nodo<T>* aux = nullptr;
-	 actual = primero;
-	 aux = ultimo->getAnterior();
-	 aux->setSiguiente(nullptr);
-	 ultimo->setSiguiente(primero->getSiguiente());
-	 primero = ultimo;
-	 ultimo = aux;
-	 aux = actual->getSiguiente();
-	 aux->setAnterior(primero);
-	 primero->setAnterior(nullptr);
-	 delete actual;
-	return  true;
+	 if (!this->empty()) {
+		 Nodo<T>* aux = nullptr;
+		 actual = primero;
+		 aux = ultimo->getAnterior();
+		 aux->setSiguiente(nullptr);
+		 ultimo->setSiguiente(primero->getSiguiente());
+		 primero = ultimo;
+		 ultimo = aux;
+		 aux = actual->getSiguiente();
+		 aux->setAnterior(primero);
+		 primero->setAnterior(nullptr);
+		 delete actual;
+		 cantidad--;
+		 return  true;
+	 }
+	 return false;
 }
 
 

@@ -43,7 +43,12 @@ Persona::operator int const()
     return edad;
 }
 
-ostream& operator<<(ostream& os, Persona&)
+ostream& operator<<(ostream& os, Persona& per)
 {
+    os << "Cedula: " << per.ced << std::endl;
+    os << "Edad: " << per.edad << std::endl;
+    os << "Nombre: " << per.nombre << std::endl;
+    os << "------------------------------" << std::endl;
+
     return os;
 }
