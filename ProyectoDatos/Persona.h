@@ -15,6 +15,7 @@ public:
 	void setCedula(string);
 
 	Persona(string = "", string = "", int = 0);
+	Persona(const Persona&);
 	friend ostream& operator <<(ostream&, Persona&);
 	operator int  const ();
 private:

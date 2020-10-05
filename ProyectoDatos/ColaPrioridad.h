@@ -35,7 +35,8 @@ ColaPrioridad<T>::ColaPrioridad(bool m)
 
 template<class T>
 ColaPrioridad<T>::ColaPrioridad( const ColaPrioridad<T> &cl) {
-	
+	this->tipo = cl.tipo;
+	this->contenedor = new Lista<T>(*cl.contenedor);
 }
 
 template<class T>

@@ -38,6 +38,13 @@ Persona::Persona(string ced, string nom, int eda)
     this->edad = eda;
 }
 
+Persona::Persona(const Persona& per)
+{
+    this->ced= per.ced;
+    this->nombre = per.nombre;
+    this->edad = per.edad;
+}
+
 Persona::operator int const()
 {
     return edad;

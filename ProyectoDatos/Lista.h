@@ -105,13 +105,13 @@ Lista<T>::Lista(const Lista<T>& ls)
 {
 	int contador = 0;
 	T* dato = NULL;
-	actual= ls.primero;
-	while (ls.cantidad>contador)
+	Nodo<T>* aux= ls.primero;
+	while (ls.cantidad>=contador)
 	{
-		dato = new T(*actual->getObjetoPtr());
-		actual = actual->getSiguiente();
+		dato = new T(*aux->getObjetoPtr());
 		this->insertar(dato);
 		contador++;
+		aux = aux->getSiguiente();
 	}
 	
 }
