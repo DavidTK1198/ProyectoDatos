@@ -312,5 +312,9 @@ void ColaPrioridad<T>::mostrar() {
 
 
 
-//Referencia
+//Referencias
 //https://www.softwaretestinghelp.com/priority-queue-in-cpp/
+// https://www.codesdope.com/blog/article/priority-queue-using-heap/
+// https://drive.google.com/drive/folders/1RVbZVZsSCLrFopsnvsyAkrPE9R_zwgWU //hacerle referencia al libro
+// Data Structures and
+//Algorithms in C++ de Michael 
