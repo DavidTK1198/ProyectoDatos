@@ -88,6 +88,7 @@ public:
 	bool eliminar();
 	void mostrar();
 	T elemento();
+	T* buscarElemento(int);
 
 };
 
@@ -215,6 +216,23 @@ template<class T>
 {
 	return *primero->getObjetoPtr();
 }
+
+ template<class T>
+ T* Lista<T>::buscarElemento(int m)
+ {
+	 int contador = 0;
+	 actual = primero;
+	 T* obj = nullptr;
+	 while (actual!=nullptr) {
+		 if (contador == m) {
+			 obj = actual->getObjetoPtr();
+			 return obj;
+		 }
+		 contador++;
+		 actual = actual->getSiguiente();
+	 }
+	 return nullptr;
+ }
 
 
 

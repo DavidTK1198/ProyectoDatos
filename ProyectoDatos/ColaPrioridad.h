@@ -5,7 +5,7 @@ public:
 
 	ColaPrioridad(bool=true);
 	ColaPrioridad(const ColaPrioridad<T> &cl);
-	ColaPrioridad(const Lista<T>& ls);//falta hacerlo
+	ColaPrioridad(const Lista<T>& ls,bool);//falta hacerlo
 	bool isEmpty();
 	bool insertar(T*&);
 	bool eliminar();
@@ -24,6 +24,7 @@ private:
 	int getHijoDer(int);
 	void SiftUp();
 	void SiftUpMenor();
+	T* comparaHipifyMayor(int);
 };
 
 template<class T>
@@ -40,11 +41,12 @@ ColaPrioridad<T>::ColaPrioridad( const ColaPrioridad<T> &cl) {
 }
 
 template<class T>
- ColaPrioridad<T>::ColaPrioridad(const Lista<T>& ls)
+ ColaPrioridad<T>::ColaPrioridad(const Lista<T>& ls,bool ti)
 {
-	 this->contenedor = new Lista<T>(&ls);
+	 this->contenedor = new Lista<T>(ls);
+	 this->tipo = ti;
 	 this->CrearHeap(contenedor);
-	 this->tipo = true;
+	
 }
 
 
@@ -106,19 +108,35 @@ void ColaPrioridad<T>::MaxHeapify(int i)
 {
 	int izq = this->getHijoIz(i);//index vectores...
 	int der = this->getHijoDer(i);//nodo 3 
+	T* obj = nullptr;
+	T* obj2 = nullptr;
+	T* father = nullptr;
+	T* tmp = nullptr;
 	int mayor = 0;
 	if (izq == -1 && der == -1) {
 		return;
 	}
-
-	if (izq > i) {
-		mayor = izq;
+	obj = this->comparaHipifyMayor(izq);
+	obj2 = this->comparaHipifyMayor(der);
+	father = this->comparaHipifyMayor(i);
+	if (obj == nullptr && obj2 == nullptr) {
+		return;
 	}
-	else {
-		mayor = i;
+	if (obj != nullptr) {
+		if (*obj > * father) {
+			mayor = izq;
+			tmp = obj;
+		}
+		else {
+			mayor = i;
+			tmp = father;
+		}
 	}
-	if (der > mayor) {
-		mayor = der;
+	if (obj2 != nullptr) {
+		if (*obj2 > * tmp) {
+			mayor = der;
+			tmp = obj2;
+		}
 	}
 
 	if (mayor != i) {
@@ -134,18 +152,34 @@ template<class T>
 	 int izq = this->getHijoIz(i);//index vectores...
 	 int der = this->getHijoDer(i);//nodo 3 
 	 int menor = 0;
+	 T* obj = nullptr;
+	 T* obj2 = nullptr;
+	 T* father = nullptr;
+	 T* tmp = nullptr;
 	 if (izq == -1 && der == -1) {
 		 return;
 	 }
-
-	 if (izq < i && izq != -1) {
-		 menor = izq;
+	 obj = this->comparaHipifyMayor(izq);
+	 obj2 = this->comparaHipifyMayor(der);
+	 father = this->comparaHipifyMayor(i);
+	 if (obj == nullptr && obj2 == nullptr) {
+		 return;
 	 }
-	 else {
-		 menor = izq;
+	 if (obj == nullptr) {
+		 if (*obj < *father && izq != -1) {
+			 menor = izq;
+			 tmp = obj;
+		 }
+		 else {
+			 menor = i;
+			 tmp = father;
+		 }
 	 }
-	 if (der < menor && der != -1) {
-		 menor  = der;
+	 if (obj2 == nullptr) {
+		 if (*obj2 < *tmp && der != -1) {
+			 menor = der;
+			 tmp = obj2;
+		 }
 	 }
 
 	 if (menor != i) {
@@ -177,10 +211,11 @@ int ColaPrioridad<T>::getHijoIz(int i)
 template<class T>
 void ColaPrioridad<T>::CrearHeap(Lista<T>* ls)
 {
-	int n = ((contenedor->getCantidad()-1)/2); //Revisar minuciosamente
-	for (int i = n; i >= 0; i--) {
+	//int n = ((contenedor->getCantidad()-1)/2); //Revisar minuciosamente
+	for (int i = (contenedor->getCantidad()/2)-1; i >= 0; i--) {
 		if (this->tipo == true) {
 			this->MaxHeapify(i);
+
 		}
 		else {
 			this->MinHeapify(i);
@@ -264,6 +299,12 @@ void ColaPrioridad<T>::SiftUpMenor()
 		contador2--;
 	}
 
+}
+template<class T>
+T* ColaPrioridad<T>::comparaHipifyMayor(int m)
+{
+	return contenedor->buscarElemento(m);
+	
 }
 template<class T>
 void ColaPrioridad<T>::Intercambio(int mayor, int i)
