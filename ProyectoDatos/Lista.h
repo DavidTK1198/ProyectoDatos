@@ -87,7 +87,7 @@ public:
 	bool insertar(T*);
 	bool eliminar();
 	void mostrar();
-	T elemento();
+	T* elemento();
 	T* buscarElemento(int);
 
 };
@@ -183,6 +183,11 @@ template<class T>
  bool Lista<T>::eliminar()
  {
 	 if (!this->empty()) {
+		 if (this->getCantidad() == 0) {
+			 delete primero;
+			 this->primero = nullptr;
+			 return true;
+		 }
 		 Nodo<T>* aux = nullptr;
 		 actual = primero;
 		 aux = ultimo->getAnterior();
@@ -190,7 +195,12 @@ template<class T>
 		 ultimo->setSiguiente(primero->getSiguiente());
 		 primero = ultimo;
 		 ultimo = aux;
-		 aux = actual->getSiguiente();
+		 aux = actual->getSiguiente();//
+		 if (aux == nullptr) {
+			 delete actual;
+			 cantidad--;
+			 return true;
+		 }
 		 aux->setAnterior(primero);
 		 primero->setAnterior(nullptr);
 		 delete actual;
@@ -212,9 +222,9 @@ void Lista<T>::mostrar()
 }
 
 template<class T>
- T Lista<T>::elemento()
+ T* Lista<T>::elemento()
 {
-	return *primero->getObjetoPtr();
+	return primero->getObjetoPtr();
 }
 
  template<class T>

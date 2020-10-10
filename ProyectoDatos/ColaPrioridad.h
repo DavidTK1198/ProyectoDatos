@@ -6,11 +6,12 @@ public:
 	ColaPrioridad(bool=true);
 	ColaPrioridad(const ColaPrioridad<T> &cl);
 	ColaPrioridad(const Lista<T>& ls,bool);//falta hacerlo
+	~ColaPrioridad();
 	bool isEmpty();
 	bool insertar(T*&);
-	bool eliminar();
-	T peek();
-	void mostrar();
+	T* peek();
+	T* remove();
+	/*void mostrar();*/
 private:
 	bool compara(T& obj_a, T& obj_b);
 	bool tipo;
@@ -25,6 +26,7 @@ private:
 	void SiftUp();
 	void SiftUpMenor();
 	T* comparaHipifyMayor(int);
+	bool eliminar();
 };
 
 template<class T>
@@ -49,11 +51,16 @@ template<class T>
 	
 }
 
+ template<class T>
+ ColaPrioridad<T>::~ColaPrioridad()
+ {
+ }
+
 
 template<class T>
 bool ColaPrioridad<T>::isEmpty()
 {
-	return this->Contenedor->empty();
+	return (this->contenedor->empty());
 }
 
 template<class T>
@@ -92,10 +99,18 @@ bool ColaPrioridad<T>::eliminar()
 }
 
 template<class T>
- T ColaPrioridad<T>::peek()
+ T* ColaPrioridad<T>::peek()
 {
 	return contenedor->elemento();
 }
+
+ template<class T>
+ T* ColaPrioridad<T>::remove()
+ {
+	 T* objeto = new T(*this->contenedor->getFront()->getObjetoPtr());
+	 this->eliminar();
+	 return objeto;
+ }
 
 template<class T>
 bool ColaPrioridad<T>::compara(T& obj_a, T& obj_b)
@@ -165,7 +180,7 @@ template<class T>
 	 if (obj == nullptr && obj2 == nullptr) {
 		 return;
 	 }
-	 if (obj == nullptr) {
+	 if (obj != nullptr) {
 		 if (*obj < *father && izq != -1) {
 			 menor = izq;
 			 tmp = obj;
@@ -175,7 +190,7 @@ template<class T>
 			 tmp = father;
 		 }
 	 }
-	 if (obj2 == nullptr) {
+	 if (obj2 != nullptr) {
 		 if (*obj2 < *tmp && der != -1) {
 			 menor = der;
 			 tmp = obj2;
@@ -346,10 +361,10 @@ void ColaPrioridad<T>::Intercambio(int mayor, int i)
 	}
 
 }
-template<class T>
-void ColaPrioridad<T>::mostrar() {
-	this->contenedor->mostrar();
-}
+//template<class T>
+//void ColaPrioridad<T>::mostrar() {
+//	this->contenedor->mostrar();
+//}
 
 
 
