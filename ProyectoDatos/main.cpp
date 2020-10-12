@@ -4,7 +4,10 @@
 #include "Persona.h"
 using std::cout;
 using std::endl;
-
+//Referencias
+//Data Structuresand
+//Algorithms in C++
+// pag 344-345
 template<class T>
 void mostrarContenido(ColaPrioridad<T>& p);
 void HospitalEsperanza();
@@ -57,8 +60,9 @@ void mostrarContenido(ColaPrioridad<T>& p)
 	while (!p.isEmpty()) {
 		elemento = p.remove();
 		cout << *elemento << endl;
+		delete elemento;
 	}
-	delete elemento;
+	
 
 }
 
